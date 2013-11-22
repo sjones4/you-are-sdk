@@ -18,13 +18,16 @@ import java.util.Map;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.AmazonWebServiceRequest;
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
 import com.amazonaws.auth.AWS4Signer;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.http.DefaultErrorResponseHandler;
 import com.amazonaws.http.ExecutionContext;
 import com.amazonaws.http.StaxResponseHandler;
+import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
 import com.amazonaws.transform.StaxUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
@@ -47,11 +50,33 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
   private final AWSCredentialsProvider awsCredentialsProvider;
   private final AWS4Signer signer;
 
-  public YouAreClient( final AWSCredentialsProvider awsCredentialsProvider ) {
-    super(awsCredentialsProvider);
+  public YouAreClient( final AWSCredentialsProvider awsCredentialsProvider,
+                       final ClientConfiguration clientConfiguration ) {
+    super( awsCredentialsProvider, clientConfiguration );
     this.awsCredentialsProvider = awsCredentialsProvider;
     this.signer = new AWS4Signer();
     this.signer.setServiceName("iam");
+  }
+
+  public YouAreClient() {
+    this( new DefaultAWSCredentialsProviderChain(), new ClientConfiguration() );
+  }
+
+  public YouAreClient( final AWSCredentials awsCredentials ) {
+    this( new StaticCredentialsProvider( awsCredentials ), new ClientConfiguration()  );
+  }
+
+  public YouAreClient( final AWSCredentials awsCredentials,
+                       final ClientConfiguration clientConfiguration ) {
+    this( new StaticCredentialsProvider( awsCredentials ), clientConfiguration );
+  }
+
+  public YouAreClient( final ClientConfiguration clientConfiguration ) {
+    this( new DefaultAWSCredentialsProviderChain(), clientConfiguration );
+  }
+
+  public YouAreClient( final AWSCredentialsProvider awsCredentialsProvider ) {
+    this( awsCredentialsProvider, new ClientConfiguration());
   }
 
   @Override

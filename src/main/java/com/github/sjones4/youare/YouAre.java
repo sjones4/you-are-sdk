@@ -16,6 +16,7 @@ package com.github.sjones4.youare;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.github.sjones4.youare.model.CreateAccountRequest;
 import com.github.sjones4.youare.model.CreateAccountResult;
 import com.github.sjones4.youare.model.DeleteAccountRequest;
@@ -25,7 +26,7 @@ import com.github.sjones4.youare.model.ListAccountsResult;
 /**
  *
  */
-public interface YouAre {
+public interface YouAre extends AmazonIdentityManagement {
   CreateAccountResult createAccount(CreateAccountRequest createAccountRequest) throws AmazonServiceException, AmazonClientException;
 
   void deleteAccount(DeleteAccountRequest deleteAccountRequest) throws AmazonServiceException, AmazonClientException;
