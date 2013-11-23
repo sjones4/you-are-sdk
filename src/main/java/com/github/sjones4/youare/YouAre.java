@@ -19,19 +19,33 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement;
 import com.github.sjones4.youare.model.CreateAccountRequest;
 import com.github.sjones4.youare.model.CreateAccountResult;
+import com.github.sjones4.youare.model.DeleteAccountPolicyRequest;
 import com.github.sjones4.youare.model.DeleteAccountRequest;
+import com.github.sjones4.youare.model.GetAccountPolicyRequest;
+import com.github.sjones4.youare.model.GetAccountPolicyResult;
+import com.github.sjones4.youare.model.ListAccountPoliciesRequest;
+import com.github.sjones4.youare.model.ListAccountPoliciesResult;
 import com.github.sjones4.youare.model.ListAccountsRequest;
 import com.github.sjones4.youare.model.ListAccountsResult;
+import com.github.sjones4.youare.model.PutAccountPolicyRequest;
 
 /**
  *
  */
 public interface YouAre extends AmazonIdentityManagement {
-  CreateAccountResult createAccount(CreateAccountRequest createAccountRequest) throws AmazonServiceException, AmazonClientException;
+  CreateAccountResult createAccount( CreateAccountRequest createAccountRequest ) throws AmazonServiceException, AmazonClientException;
 
-  void deleteAccount(DeleteAccountRequest deleteAccountRequest) throws AmazonServiceException, AmazonClientException;
+  void deleteAccount( DeleteAccountRequest deleteAccountRequest ) throws AmazonServiceException, AmazonClientException;
 
-  ListAccountsResult listAccounts() throws AmazonServiceException, AmazonClientException;
+  ListAccountsResult listAccounts( ) throws AmazonServiceException, AmazonClientException;
 
   ListAccountsResult listAccounts( ListAccountsRequest listAccountsRequest ) throws AmazonServiceException, AmazonClientException;
+
+  void putAccountPolicy( PutAccountPolicyRequest putAccountPolicyRequest ) throws AmazonServiceException, AmazonClientException;
+
+  void deleteAccountPolicy( DeleteAccountPolicyRequest deleteAccountPolicyRequest ) throws AmazonServiceException, AmazonClientException;
+
+  ListAccountPoliciesResult listAccountPolicies( ListAccountPoliciesRequest listAccountPoliciesRequest ) throws AmazonServiceException, AmazonClientException;
+
+  GetAccountPolicyResult getAccountPolicy( GetAccountPolicyRequest getAccountPolicyRequest ) throws AmazonServiceException, AmazonClientException;
 }

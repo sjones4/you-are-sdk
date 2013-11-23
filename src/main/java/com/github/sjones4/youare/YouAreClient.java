@@ -34,14 +34,26 @@ import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
 import com.github.sjones4.youare.model.CreateAccountRequest;
 import com.github.sjones4.youare.model.CreateAccountResult;
+import com.github.sjones4.youare.model.DeleteAccountPolicyRequest;
 import com.github.sjones4.youare.model.DeleteAccountRequest;
+import com.github.sjones4.youare.model.GetAccountPolicyRequest;
+import com.github.sjones4.youare.model.GetAccountPolicyResult;
+import com.github.sjones4.youare.model.ListAccountPoliciesRequest;
+import com.github.sjones4.youare.model.ListAccountPoliciesResult;
 import com.github.sjones4.youare.model.ListAccountsRequest;
 import com.github.sjones4.youare.model.ListAccountsResult;
+import com.github.sjones4.youare.model.PutAccountPolicyRequest;
 import com.github.sjones4.youare.model.transform.CreateAccountRequestMarshaller;
 import com.github.sjones4.youare.model.transform.CreateAccountResultStaxUnmarshaller;
+import com.github.sjones4.youare.model.transform.DeleteAccountPolicyRequestMarshaller;
 import com.github.sjones4.youare.model.transform.DeleteAccountRequestMarshaller;
+import com.github.sjones4.youare.model.transform.GetAccountPolicyRequestMarshaller;
+import com.github.sjones4.youare.model.transform.GetAccountPolicyResultStaxUnmarshaller;
+import com.github.sjones4.youare.model.transform.ListAccountPoliciesRequestMarshaller;
+import com.github.sjones4.youare.model.transform.ListAccountPoliciesResultStaxUnmarshaller;
 import com.github.sjones4.youare.model.transform.ListAccountsRequestMarshaller;
 import com.github.sjones4.youare.model.transform.ListAccountsResultStaxUnmarshaller;
+import com.github.sjones4.youare.model.transform.PutAccountPolicyRequestMarshaller;
 
 /**
  *
@@ -97,7 +109,7 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
   }
 
   @Override
-  public void deleteAccount( final DeleteAccountRequest deleteAccountRequest ) throws AmazonServiceException, AmazonClientException {
+  public void deleteAccount( final DeleteAccountRequest deleteAccountRequest ) throws AmazonClientException {
     ExecutionContext executionContext = createExecutionContext(deleteAccountRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<DeleteAccountRequest> request = null;
@@ -118,7 +130,7 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
   }
 
   @Override
-  public ListAccountsResult listAccounts( final ListAccountsRequest listAccountsRequest ) throws AmazonServiceException, AmazonClientException {
+  public ListAccountsResult listAccounts( final ListAccountsRequest listAccountsRequest ) throws AmazonClientException {
     ExecutionContext executionContext = createExecutionContext(listAccountsRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<ListAccountsRequest> request = null;
@@ -129,6 +141,72 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
       return response = invoke(request, new ListAccountsResultStaxUnmarshaller(), executionContext);
+    } finally {
+      endClientExecution(awsRequestMetrics, request, response);
+    }
+  }
+
+  @Override
+  public void putAccountPolicy( final PutAccountPolicyRequest putAccountPolicyRequest ) throws  AmazonClientException {
+    ExecutionContext executionContext = createExecutionContext(putAccountPolicyRequest);
+    AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<PutAccountPolicyRequest> request = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
+    try {
+      request = new PutAccountPolicyRequestMarshaller().marshall(putAccountPolicyRequest);
+      // Binds the request metrics to the current request.
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      invoke(request, null, executionContext);
+    } finally {
+      endClientExecution(awsRequestMetrics, request, null);
+    }
+  }
+
+  @Override
+  public void deleteAccountPolicy( final DeleteAccountPolicyRequest deleteAccountPolicyRequest ) throws AmazonClientException {
+    ExecutionContext executionContext = createExecutionContext(deleteAccountPolicyRequest);
+    AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<DeleteAccountPolicyRequest> request = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
+    try {
+      request = new DeleteAccountPolicyRequestMarshaller().marshall(deleteAccountPolicyRequest);
+      // Binds the request metrics to the current request.
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      invoke(request, null, executionContext);
+    } finally {
+      endClientExecution(awsRequestMetrics, request, null);
+    }
+  }
+
+  @Override
+  public ListAccountPoliciesResult listAccountPolicies( final ListAccountPoliciesRequest listAccountPoliciesRequest ) throws AmazonClientException {
+    ExecutionContext executionContext = createExecutionContext(listAccountPoliciesRequest);
+    AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<ListAccountPoliciesRequest> request = null;
+    ListAccountPoliciesResult response = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
+    try {
+      request = new ListAccountPoliciesRequestMarshaller().marshall(listAccountPoliciesRequest);
+      // Binds the request metrics to the current request.
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      return response = invoke(request, new ListAccountPoliciesResultStaxUnmarshaller(), executionContext);
+    } finally {
+      endClientExecution(awsRequestMetrics, request, response);
+    }
+  }
+
+  @Override
+  public GetAccountPolicyResult getAccountPolicy( final GetAccountPolicyRequest getAccountPolicyRequest ) throws AmazonClientException {
+    ExecutionContext executionContext = createExecutionContext(getAccountPolicyRequest);
+    AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<GetAccountPolicyRequest> request = null;
+    GetAccountPolicyResult response = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
+    try {
+      request = new GetAccountPolicyRequestMarshaller().marshall(getAccountPolicyRequest);
+      // Binds the request metrics to the current request.
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      return response = invoke(request, new GetAccountPolicyResultStaxUnmarshaller(), executionContext);
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }
