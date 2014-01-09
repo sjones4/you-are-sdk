@@ -14,6 +14,7 @@
  */
 package com.github.sjones4.youcan.youserv;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import com.amazonaws.AmazonWebServiceClient;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
+import com.amazonaws.Response;
 import com.amazonaws.ResponseMetadata;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -83,21 +85,12 @@ public class YouServClient extends AmazonWebServiceClient implements YouServ {
   private void init() {
     exceptionUnmarshallers.add(new LegacyErrorUnmarshaller());
     setEndpoint("http://localhost:8773/services/Empyrean/");
-    signer = new QueryStringSigner();
   }
 
-  @Override
-  protected String getServiceAbbreviation() {
-    return "euserv";
-  }
-
-  public ResponseMetadata getCachedResponseMetadata( final AmazonWebServiceRequest request ) {
-    return client.getResponseMetadataForRequest(request);
-  }
-
-  private <X, Y extends AmazonWebServiceRequest> X invoke( final Request<Y> request,
-                                                           final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
-                                                           final ExecutionContext executionContext ) {
+  private <X, Y extends AmazonWebServiceRequest> Response<X> invoke( final Request<Y> request,
+                                                                     final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
+                                                                     final ExecutionContext executionContext)
+  {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
@@ -110,10 +103,10 @@ public class YouServClient extends AmazonWebServiceClient implements YouServ {
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(signer);
+    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
-    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<>(unmarshaller);
+    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);
     return client.execute(request, responseHandler, errorResponseHandler, executionContext);
   }
@@ -128,13 +121,14 @@ public class YouServClient extends AmazonWebServiceClient implements YouServ {
     ExecutionContext executionContext = createExecutionContext(describeServicesRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<DescribeServicesRequest> request = null;
-    DescribeServicesResult response = null;
+    Response<DescribeServicesResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
     try {
       request = new DescribeServicesRequestMarshaller().marshall(describeServicesRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new DescribeServicesResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new DescribeServicesResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }

@@ -24,11 +24,10 @@ import com.amazonaws.AmazonWebServiceClient;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
-import com.amazonaws.ResponseMetadata;
+import com.amazonaws.Response;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.auth.QueryStringSigner;
 import com.amazonaws.http.DefaultErrorResponseHandler;
 import com.amazonaws.http.ExecutionContext;
 import com.amazonaws.http.StaxResponseHandler;
@@ -50,8 +49,6 @@ public class YouConfigClient extends AmazonWebServiceClient implements YouConfig
   private AWSCredentialsProvider awsCredentialsProvider;
 
   protected final List<Unmarshaller<AmazonServiceException, Node>> exceptionUnmarshallers = new ArrayList<>();
-
-  private QueryStringSigner signer;
 
   public YouConfigClient( ) {
     this( new DefaultAWSCredentialsProviderChain( ), new ClientConfiguration( ) );
@@ -77,27 +74,18 @@ public class YouConfigClient extends AmazonWebServiceClient implements YouConfig
                         final ClientConfiguration clientConfiguration) {
     super( clientConfiguration );
     this.awsCredentialsProvider = awsCredentialsProvider;
-    init( );
+    init();
   }
 
   private void init() {
-    exceptionUnmarshallers.add(new LegacyErrorUnmarshaller());
+    exceptionUnmarshallers.add( new LegacyErrorUnmarshaller() );
     setEndpoint("http://localhost:8773/services/Configuration/");
-    signer = new QueryStringSigner();
   }
 
-  @Override
-  protected String getServiceAbbreviation() {
-    return "euconfig";
-  }
-
-  public ResponseMetadata getCachedResponseMetadata( final AmazonWebServiceRequest request ) {
-    return client.getResponseMetadataForRequest( request );
-  }
-
-  private <X, Y extends AmazonWebServiceRequest> X invoke( final Request<Y> request,
-                                                           final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
-                                                           final ExecutionContext executionContext ) {
+  private <X, Y extends AmazonWebServiceRequest> Response<X> invoke( final Request<Y> request,
+                                                                     final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
+                                                                     final ExecutionContext executionContext)
+  {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
@@ -110,10 +98,10 @@ public class YouConfigClient extends AmazonWebServiceClient implements YouConfig
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(signer);
+    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
-    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<>(unmarshaller);
+    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);
     return client.execute(request, responseHandler, errorResponseHandler, executionContext);
   }
@@ -128,13 +116,14 @@ public class YouConfigClient extends AmazonWebServiceClient implements YouConfig
     ExecutionContext executionContext = createExecutionContext(describeComponentsRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<DescribeComponentsRequest> request = null;
-    DescribeComponentsResult response = null;
+    Response<DescribeComponentsResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
     try {
       request = new DescribeComponentsRequestMarshaller().marshall(describeComponentsRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new DescribeComponentsResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new DescribeComponentsResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }

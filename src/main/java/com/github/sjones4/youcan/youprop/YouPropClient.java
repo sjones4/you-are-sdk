@@ -24,11 +24,10 @@ import com.amazonaws.AmazonWebServiceClient;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
-import com.amazonaws.ResponseMetadata;
+import com.amazonaws.Response;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.auth.QueryStringSigner;
 import com.amazonaws.http.DefaultErrorResponseHandler;
 import com.amazonaws.http.ExecutionContext;
 import com.amazonaws.http.StaxResponseHandler;
@@ -54,8 +53,6 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
   private AWSCredentialsProvider awsCredentialsProvider;
 
   protected final List<Unmarshaller<AmazonServiceException, Node>> exceptionUnmarshallers = new ArrayList<>();
-
-  private QueryStringSigner signer;
 
   public YouPropClient( ) {
     this( new DefaultAWSCredentialsProviderChain( ), new ClientConfiguration( ) );
@@ -87,21 +84,12 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
   private void init() {
     exceptionUnmarshallers.add(new LegacyErrorUnmarshaller());
     setEndpoint("http://localhost:8773/services/Properties/");
-    signer = new QueryStringSigner();
   }
 
-  @Override
-  protected String getServiceAbbreviation() {
-    return "euprop";
-  }
-
-  public ResponseMetadata getCachedResponseMetadata( final AmazonWebServiceRequest request ) {
-    return client.getResponseMetadataForRequest(request);
-  }
-
-  private <X, Y extends AmazonWebServiceRequest> X invoke( final Request<Y> request,
-                                                           final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
-                                                           final ExecutionContext executionContext ) {
+  private <X, Y extends AmazonWebServiceRequest> Response<X> invoke( final Request<Y> request,
+                                                                     final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
+                                                                     final ExecutionContext executionContext )
+  {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
@@ -114,10 +102,10 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(signer);
+    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
-    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<>(unmarshaller);
+    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);
     return client.execute(request, responseHandler, errorResponseHandler, executionContext);
   }
@@ -132,13 +120,14 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
     ExecutionContext executionContext = createExecutionContext(describePropertiesRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<DescribePropertiesRequest> request = null;
-    DescribePropertiesResult response = null;
+    Response<DescribePropertiesResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
     try {
       request = new DescribePropertiesRequestMarshaller().marshall(describePropertiesRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new DescribePropertiesResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new DescribePropertiesResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }
@@ -149,13 +138,14 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
     ExecutionContext executionContext = createExecutionContext(modifyPropertyRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<ModifyPropertyValueRequest> request = null;
-    ModifyPropertyValueResult response = null;
+    Response<ModifyPropertyValueResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
     try {
       request = new ModifyPropertyValueRequestMarshaller().marshall(modifyPropertyRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new ModifyPropertyValueResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new ModifyPropertyValueResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }

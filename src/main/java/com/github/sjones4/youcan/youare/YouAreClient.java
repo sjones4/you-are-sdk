@@ -14,13 +14,14 @@
  */
 package com.github.sjones4.youcan.youare;
 
+import java.net.URI;
 import java.util.Map;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
-import com.amazonaws.auth.AWS4Signer;
+import com.amazonaws.Response;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
@@ -60,14 +61,11 @@ import com.github.sjones4.youcan.youare.model.transform.PutAccountPolicyRequestM
  */
 public class YouAreClient extends AmazonIdentityManagementClient implements YouAre {
   private final AWSCredentialsProvider awsCredentialsProvider;
-  private final AWS4Signer signer;
 
   public YouAreClient( final AWSCredentialsProvider awsCredentialsProvider,
                        final ClientConfiguration clientConfiguration ) {
     super( awsCredentialsProvider, clientConfiguration );
     this.awsCredentialsProvider = awsCredentialsProvider;
-    this.signer = new AWS4Signer();
-    this.signer.setServiceName("iam");
   }
 
   public YouAreClient() {
@@ -96,13 +94,14 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
     ExecutionContext executionContext = createExecutionContext(createAccountRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<CreateAccountRequest> request = null;
-    CreateAccountResult response = null;
+    Response<CreateAccountResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
     try {
       request = new CreateAccountRequestMarshaller().marshall(createAccountRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new CreateAccountResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new CreateAccountResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution( awsRequestMetrics, request, response );
     }
@@ -134,13 +133,14 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
     ExecutionContext executionContext = createExecutionContext(listAccountsRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<ListAccountsRequest> request = null;
-    ListAccountsResult response = null;
+    Response<ListAccountsResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
     try {
       request = new ListAccountsRequestMarshaller().marshall(listAccountsRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new ListAccountsResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new ListAccountsResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }
@@ -183,13 +183,14 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
     ExecutionContext executionContext = createExecutionContext(listAccountPoliciesRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<ListAccountPoliciesRequest> request = null;
-    ListAccountPoliciesResult response = null;
+    Response<ListAccountPoliciesResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
     try {
       request = new ListAccountPoliciesRequestMarshaller().marshall(listAccountPoliciesRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new ListAccountPoliciesResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new ListAccountPoliciesResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }
@@ -200,25 +201,26 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
     ExecutionContext executionContext = createExecutionContext(getAccountPolicyRequest);
     AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
     Request<GetAccountPolicyRequest> request = null;
-    GetAccountPolicyResult response = null;
+    Response<GetAccountPolicyResult> response = null;
     awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
     try {
       request = new GetAccountPolicyRequestMarshaller().marshall(getAccountPolicyRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      return response = invoke(request, new GetAccountPolicyResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new GetAccountPolicyResultStaxUnmarshaller(), executionContext);
+      return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }
   }
 
-  protected <X, Y extends AmazonWebServiceRequest> X invoke(
+  private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(
       final Request<Y> request,
       final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
-      final ExecutionContext executionContext
-  ) {
-    request.setEndpoint( endpoint );
-    request.setTimeOffset( timeOffset );
+      final ExecutionContext executionContext)
+  {
+    request.setEndpoint(endpoint);
+    request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
     for (Map.Entry<String, String> entry : originalRequest.copyPrivateRequestParameters().entrySet()) {
       request.addParameter(entry.getKey(), entry.getValue());
@@ -229,10 +231,10 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(signer);
+    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
-    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<>(unmarshaller);
+    StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);
     return client.execute(request, responseHandler, errorResponseHandler, executionContext);
   }
