@@ -39,8 +39,12 @@ import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
 import com.github.sjones4.youcan.youprop.model.DescribePropertiesRequest;
 import com.github.sjones4.youcan.youprop.model.DescribePropertiesResult;
+import com.github.sjones4.youcan.youprop.model.ModifyPropertyValueRequest;
+import com.github.sjones4.youcan.youprop.model.ModifyPropertyValueResult;
 import com.github.sjones4.youcan.youprop.model.transform.DescribePropertiesRequestMarshaller;
 import com.github.sjones4.youcan.youprop.model.transform.DescribePropertiesResultStaxUnmarshaller;
+import com.github.sjones4.youcan.youprop.model.transform.ModifyPropertyValueRequestMarshaller;
+import com.github.sjones4.youcan.youprop.model.transform.ModifyPropertyValueResultStaxUnmarshaller;
 
 /**
  *
@@ -135,6 +139,23 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
       return response = invoke(request, new DescribePropertiesResultStaxUnmarshaller(), executionContext);
+    } finally {
+      endClientExecution(awsRequestMetrics, request, response);
+    }
+  }
+
+  @Override
+  public ModifyPropertyValueResult modifyPropertyValue( final ModifyPropertyValueRequest modifyPropertyRequest ) throws AmazonClientException {
+    ExecutionContext executionContext = createExecutionContext(modifyPropertyRequest);
+    AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<ModifyPropertyValueRequest> request = null;
+    ModifyPropertyValueResult response = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
+    try {
+      request = new ModifyPropertyValueRequestMarshaller().marshall(modifyPropertyRequest);
+      // Binds the request metrics to the current request.
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      return response = invoke(request, new ModifyPropertyValueResultStaxUnmarshaller(), executionContext);
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
     }

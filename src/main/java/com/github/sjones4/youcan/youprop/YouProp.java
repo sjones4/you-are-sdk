@@ -18,13 +18,17 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.github.sjones4.youcan.youprop.model.DescribePropertiesRequest;
 import com.github.sjones4.youcan.youprop.model.DescribePropertiesResult;
+import com.github.sjones4.youcan.youprop.model.ModifyPropertyValueRequest;
+import com.github.sjones4.youcan.youprop.model.ModifyPropertyValueResult;
 
 /**
  *
  */
 public interface YouProp {
 
-  DescribePropertiesResult describeProperties( )  throws AmazonServiceException, AmazonClientException;
+  DescribePropertiesResult describeProperties( ) throws AmazonServiceException, AmazonClientException;
 
-  DescribePropertiesResult describeProperties( DescribePropertiesRequest describePropertiesRequest )  throws AmazonServiceException, AmazonClientException;
+  DescribePropertiesResult describeProperties( DescribePropertiesRequest describePropertiesRequest ) throws AmazonServiceException, AmazonClientException;
+
+  ModifyPropertyValueResult modifyPropertyValue( ModifyPropertyValueRequest modifyPropertyRequest ) throws AmazonServiceException, AmazonClientException;
 }
