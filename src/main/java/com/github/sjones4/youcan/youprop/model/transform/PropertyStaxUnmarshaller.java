@@ -49,6 +49,14 @@ public class PropertyStaxUnmarshaller implements Unmarshaller<Property, StaxUnma
           property.setDescription( SimpleTypeStaxUnmarshallers.StringStaxUnmarshaller.getInstance().unmarshall( context ) );
           continue;
         }
+        if (context.testExpression("defaultValue", targetDepth)) {
+          property.setDefaultValue( SimpleTypeStaxUnmarshallers.StringStaxUnmarshaller.getInstance().unmarshall( context ) );
+          continue;
+        }
+        if (context.testExpression("readOnly", targetDepth)) {
+          property.setReadOnly( SimpleTypeStaxUnmarshallers.BooleanStaxUnmarshaller.getInstance().unmarshall( context ) );
+          continue;
+        }
       } else if (xmlEvent.isEndElement()) {
         if (context.getCurrentDepth() < originalDepth) {
           return property;

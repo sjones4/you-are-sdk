@@ -28,6 +28,7 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
   private static final long serialVersionUID = 1L;
 
   private ListWithAutoConstructFlag<String> serviceNames;
+  private ListWithAutoConstructFlag<Filter> filters;
 
   public List<String> getServiceNames() {
     if ( serviceNames == null) {
@@ -42,9 +43,9 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
       this.serviceNames = null;
       return;
     }
-    ListWithAutoConstructFlag<String> propertiesCopy = new ListWithAutoConstructFlag<>( serviceNames.size());
-    propertiesCopy.addAll( serviceNames );
-    this.serviceNames = propertiesCopy;
+    ListWithAutoConstructFlag<String> serviceNamesCopy = new ListWithAutoConstructFlag<>( serviceNames.size());
+    serviceNamesCopy.addAll( serviceNames );
+    this.serviceNames = serviceNamesCopy;
   }
 
   public DescribeServicesRequest withServiceNames(String... serviceNames) {
@@ -57,11 +58,49 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
     return this;
   }
 
+  public List<Filter> getFilters() {
+    if ( filters == null) {
+      filters = new ListWithAutoConstructFlag<>();
+      filters.setAutoConstruct( true );
+    }
+    return filters;
+  }
+
+  /**
+   * Set filters, supported from Eucalyptus 4.2
+   */
+  public void setFilters( final Collection<Filter> filters ) {
+    if ( filters == null) {
+      this.filters = null;
+      return;
+    }
+    ListWithAutoConstructFlag<Filter> filtersCopy = new ListWithAutoConstructFlag<>( filters.size());
+    filtersCopy.addAll( filters );
+    this.filters = filtersCopy;
+  }
+
+  /**
+   * Set filters, supported from Eucalyptus 4.2
+   */
+  public DescribeServicesRequest withFilters(Filter... filters) {
+    setFilters( Arrays.asList( filters ) );
+    return this;
+  }
+
+  /**
+   * Set filters, supported from Eucalyptus 4.2
+   */
+  public DescribeServicesRequest withFilters(Collection<Filter> filters) {
+    setFilters( filters );
+    return this;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{");
     if ( getServiceNames() != null) sb.append("ServiceNames: " + getServiceNames() + ",");
+    if ( getFilters() != null) sb.append("Filters: " + getFilters() + ",");
     sb.append("}");
     return sb.toString();
   }
@@ -72,6 +111,7 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
     int hashCode = 1;
 
     hashCode = prime * hashCode + (( getServiceNames() == null) ? 0 : getServiceNames().hashCode());
+    hashCode = prime * hashCode + (( getFilters( ) == null) ? 0 : getFilters( ).hashCode());
     return hashCode;
   }
 
@@ -85,6 +125,8 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
 
     if (other.getServiceNames() == null ^ this.getServiceNames() == null) return false;
     if (other.getServiceNames() != null && other.getServiceNames().equals(this.getServiceNames()) == false) return false;
+    if (other.getFilters( ) == null ^ this.getFilters( ) == null) return false;
+    if (other.getFilters( ) != null && other.getFilters( ).equals(this.getFilters()) == false) return false;
     return true;
   }
 }

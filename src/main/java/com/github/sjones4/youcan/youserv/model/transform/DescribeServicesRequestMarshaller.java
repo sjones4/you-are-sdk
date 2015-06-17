@@ -21,6 +21,7 @@ import com.amazonaws.Request;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.StringUtils;
 import com.github.sjones4.youcan.youserv.model.DescribeServicesRequest;
+import com.github.sjones4.youcan.youserv.model.Filter;
 
 /**
  *
@@ -46,6 +47,32 @@ public class DescribeServicesRequestMarshaller implements Marshaller<Request<Des
       }
 
       servicesListIndex++;
+    }
+
+    final List<Filter> filtersList = describeServicesRequest.getFilters( );
+    int filtersListIndex = 1;
+
+    for ( final Filter filtersListValue : filtersList ) {
+      Filter filterMember = filtersListValue;
+      if (filterMember != null) {
+        if ( filterMember.getName( ) != null ) {
+          request.addParameter( "Filter." + filtersListIndex + ".Name", StringUtils.fromString( filterMember.getName( ) ) );
+        }
+
+        if ( filterMember.getValues( ) != null ) {
+          final List<String> valuesList = filterMember.getValues( );
+          int valuesListIndex = 1;
+
+          for ( final String valuesListValue : valuesList ) {
+            if ( valuesListValue != null ) {
+              request.addParameter("Filter." + filtersListIndex + ".Value." + valuesListIndex, StringUtils.fromString( valuesListValue ));
+            }
+
+            valuesListIndex++;
+          }
+        }
+      }
+      filtersListIndex++;
     }
 
     return request;

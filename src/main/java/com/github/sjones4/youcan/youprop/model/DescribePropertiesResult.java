@@ -51,7 +51,7 @@ public class DescribePropertiesResult implements Serializable {
     return this;
   }
 
-  public DescribePropertiesResult withAddresses(Collection<Property> properties) {
+  public DescribePropertiesResult withProperties(Collection<Property> properties) {
     setProperties( properties );
     return this;
   }

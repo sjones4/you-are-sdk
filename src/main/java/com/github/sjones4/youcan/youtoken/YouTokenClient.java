@@ -26,6 +26,7 @@ import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
 import com.amazonaws.Response;
+import com.amazonaws.SignableRequest;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
@@ -160,7 +161,7 @@ public class YouTokenClient extends AWSSecurityTokenServiceClient implements You
     protected static final String PREFIX = "Basic ";
 
     @Override
-    public void sign( final Request<?> request, final AWSCredentials credentials ) {
+    public void sign( final SignableRequest<?> request, final AWSCredentials credentials ) {
       if ( credentials instanceof PasswordCredentials ) {
         final PasswordCredentials passwordCredentials = (PasswordCredentials) credentials;
         final Charset utf8 = StandardCharsets.UTF_8;

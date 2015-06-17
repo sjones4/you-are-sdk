@@ -1,20 +1,4 @@
-{ // AWS Java SDK configuration extras
-    "serviceSigners" : [ {
-        "key" : "euconfig",
-        "config" : {
-            "signerType" : "QueryStringSignerType"
-        }
-    }, {
-        "key" : "euprop",
-        "config" : {
-            "signerType" : "QueryStringSignerType"
-        }
-    }, {
-        "key" : "euserv",
-        "config" : {
-            "signerType" : "QueryStringSignerType"
-        }
-    } ],
+{
     // AWS http client internal configuration.
     "httpClients" : [ {
         "key" : "YouConfigClient",

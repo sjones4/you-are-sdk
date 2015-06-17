@@ -25,6 +25,8 @@ public class Property implements Serializable {
   private String name;
   private String value;
   private String description;
+  private String defaultValue;
+  private Boolean readOnly;
 
   public String getName() {
     return name;
@@ -50,6 +52,22 @@ public class Property implements Serializable {
     this.description = description;
   }
 
+  public String getDefaultValue() {
+    return defaultValue;
+  }
+
+  public void setDefaultValue( final String defaultValue ) {
+    this.defaultValue = defaultValue;
+  }
+
+  public Boolean getReadOnly() {
+    return readOnly;
+  }
+
+  public void setReadOnly( final Boolean readOnly ) {
+    this.readOnly = readOnly;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -57,6 +75,8 @@ public class Property implements Serializable {
     if (getName() != null) sb.append("Name: " + getName() + ",");
     if (getValue() != null) sb.append("Value: " + getValue() + ",");
     if (getDescription() != null) sb.append("Description: " + getDescription() + ",");
+    if (getDefaultValue( ) != null) sb.append("DefaultValue: " + getDefaultValue( ) + ",");
+    if (getReadOnly( ) != null) sb.append("ReadOnly: " + getReadOnly( ) + ",");
     sb.append("}");
     return sb.toString();
   }
@@ -69,6 +89,8 @@ public class Property implements Serializable {
     hashCode = prime * hashCode + ((getName() == null) ? 0 : getName().hashCode());
     hashCode = prime * hashCode + ((getValue() == null) ? 0 : getValue().hashCode());
     hashCode = prime * hashCode + ((getDescription() == null) ? 0 : getDescription().hashCode());
+    hashCode = prime * hashCode + ((getDefaultValue( ) == null) ? 0 : getDefaultValue( ).hashCode());
+    hashCode = prime * hashCode + ((getReadOnly( ) == null) ? 0 : getReadOnly( ).hashCode());
     return hashCode;
   }
 
@@ -86,6 +108,10 @@ public class Property implements Serializable {
     if (other.getValue() != null && other.getValue().equals(this.getValue()) == false) return false;
     if (other.getDescription() == null ^ this.getDescription() == null) return false;
     if (other.getDescription() != null && other.getDescription().equals(this.getDescription()) == false) return false;
+    if (other.getDefaultValue( ) == null ^ this.getDefaultValue( ) == null) return false;
+    if (other.getDefaultValue() != null && other.getDefaultValue( ).equals(this.getDefaultValue( )) == false) return false;
+    if (other.getReadOnly( ) == null ^ this.getReadOnly( ) == null) return false;
+    if (other.getReadOnly( ) != null && other.getReadOnly( ).equals(this.getReadOnly()) == false) return false;
     return true;
   }
 }
