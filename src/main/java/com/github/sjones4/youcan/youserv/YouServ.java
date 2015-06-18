@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Steve Jones. All Rights Reserved.
+ * Copyright 2013-2015 Steve Jones. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@ package com.github.sjones4.youcan.youserv;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
+import com.github.sjones4.youcan.youserv.model.DescribeServiceCertificatesRequest;
+import com.github.sjones4.youcan.youserv.model.DescribeServiceCertificatesResult;
 import com.github.sjones4.youcan.youserv.model.DescribeServicesRequest;
 import com.github.sjones4.youcan.youserv.model.DescribeServicesResult;
 
@@ -26,6 +28,10 @@ public interface YouServ {
 
   DescribeServicesResult describeServices( )  throws AmazonServiceException, AmazonClientException;
 
-  DescribeServicesResult describeServices( DescribeServicesRequest describeServicesRequest )  throws AmazonServiceException, AmazonClientException;
+  DescribeServicesResult describeServices( DescribeServicesRequest request )  throws AmazonServiceException, AmazonClientException;
+
+  DescribeServiceCertificatesResult describeServiceCertificates( )  throws AmazonServiceException, AmazonClientException;
+
+  DescribeServiceCertificatesResult describeServiceCertificates( DescribeServiceCertificatesRequest request )  throws AmazonServiceException, AmazonClientException;
 
 }
