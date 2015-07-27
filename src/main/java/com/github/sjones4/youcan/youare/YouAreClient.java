@@ -14,8 +14,6 @@
  */
 package com.github.sjones4.youcan.youare;
 
-import java.net.URI;
-import java.util.Map;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.AmazonWebServiceRequest;
@@ -222,16 +220,12 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
-    for (Map.Entry<String, String> entry : originalRequest.copyPrivateRequestParameters().entrySet()) {
-      request.addParameter(entry.getKey(), entry.getValue());
-    }
 
     AWSCredentials credentials = awsCredentialsProvider.getCredentials();
     if (originalRequest.getRequestCredentials() != null) {
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);

@@ -16,7 +16,6 @@ package com.github.sjones4.youcan.youprop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.w3c.dom.Node;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -93,16 +92,12 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
-    for (Map.Entry<String, String> entry : originalRequest.copyPrivateRequestParameters().entrySet()) {
-      request.addParameter(entry.getKey(), entry.getValue());
-    }
 
     AWSCredentials credentials = awsCredentialsProvider.getCredentials();
     if (originalRequest.getRequestCredentials() != null) {
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);

@@ -17,9 +17,9 @@ package com.github.sjones4.youcan.youtoken;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.AmazonWebServiceRequest;
@@ -98,7 +98,7 @@ public class YouTokenClient extends AWSSecurityTokenServiceClient implements You
       request = new GetAccessTokenRequestMarshaller().marshall(getAccessTokenRequest);
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
-      response = invoke(request, new PasswordSigner(), new GetAccessTokenResultStaxUnmarshaller(), executionContext);
+      response = invoke(request, new GetAccessTokenResultStaxUnmarshaller(), executionContext);
       return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
@@ -123,33 +123,33 @@ public class YouTokenClient extends AWSSecurityTokenServiceClient implements You
     }
   }
 
-  private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(
-      final Request<Y> request,
-      final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
-      final ExecutionContext executionContext)
-  {
-    return invoke( request, getSigner( ), unmarshaller, executionContext );
+  protected ExecutionContext createExecutionContext( final AmazonWebServiceRequest req ) {
+    boolean isMetricsEnabled = isRequestMetricsEnabled(req) || isProfilingEnabled();
+    return new ExecutionContext(requestHandler2s, isMetricsEnabled, this) {
+      @Override
+      public Signer getSignerByURI( final URI uri ) {
+        if ( getCredentials( ) instanceof PasswordCredentials ) {
+          return new PasswordSigner();
+        }
+        return super.getSignerByURI( uri );
+      }
+    };
   }
 
   private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(
       final Request<Y> request,
-      final Signer signer,
       final Unmarshaller<X, StaxUnmarshallerContext> unmarshaller,
       final ExecutionContext executionContext)
   {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
-    for (Map.Entry<String, String> entry : originalRequest.copyPrivateRequestParameters().entrySet()) {
-      request.addParameter(entry.getKey(), entry.getValue());
-    }
 
     AWSCredentials credentials = awsCredentialsProvider.getCredentials();
     if (originalRequest.getRequestCredentials() != null) {
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(signer);
     executionContext.setCredentials(credentials);
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
@@ -171,12 +171,22 @@ public class YouTokenClient extends AWSSecurityTokenServiceClient implements You
           headerWriter.append( BinaryUtils.toBase64( passwordCredentials.getUserName().getBytes( utf8 ) ) );
           headerWriter.append( '@' );
           headerWriter.append( BinaryUtils.toBase64( passwordCredentials.getAccountName().getBytes( utf8 ) ) );
-          headerWriter.append( ':' );
-          for ( int i=0; i<passwordCredentials.getPassword().length; i++ ) {
-            headerWriter.append( passwordCredentials.getPassword()[i] );
+          if ( credentials instanceof PasswordUpdateCredentials ) {
+            final PasswordUpdateCredentials passwordUpdateCredentials = (PasswordUpdateCredentials) credentials;
+            headerWriter.append( ';' );
+            headerWriter.append( BinaryUtils.toBase64( new String(passwordCredentials.getPassword( ) ).getBytes( utf8 ) ) );
+            headerWriter.append( '@' );
+            for ( int i = 0; i < passwordUpdateCredentials.getPasswordUpdate( ).length; i++ ) {
+              headerWriter.append( passwordUpdateCredentials.getPasswordUpdate( )[ i ] );
+            }
+          } else {
+            headerWriter.append( ':' );
+            for ( int i = 0; i < passwordCredentials.getPassword( ).length; i++ ) {
+              headerWriter.append( passwordCredentials.getPassword( )[ i ] );
+            }
           }
           headerWriter.flush();
-          headerWriter.close();
+          headerWriter.close( );
         } catch ( IOException e ) {
           throw new AmazonClientException("Unable to construct header for password credentials", e);
         }

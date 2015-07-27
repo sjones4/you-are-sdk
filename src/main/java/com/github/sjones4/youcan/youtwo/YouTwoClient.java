@@ -14,7 +14,6 @@
  */
 package com.github.sjones4.youcan.youtwo;
 
-import java.util.Map;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
@@ -98,16 +97,12 @@ public class YouTwoClient extends AmazonEC2Client implements YouTwo {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
     AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
-    for (Map.Entry<String, String> entry : originalRequest.copyPrivateRequestParameters().entrySet()) {
-      request.addParameter(entry.getKey(), entry.getValue());
-    }
 
     AWSCredentials credentials = awsCredentialsProvider.getCredentials();
     if (originalRequest.getRequestCredentials() != null) {
       credentials = originalRequest.getRequestCredentials();
     }
 
-    executionContext.setSigner(getSigner());
     executionContext.setCredentials(credentials);
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
