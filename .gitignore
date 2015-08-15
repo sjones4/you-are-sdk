@@ -1,0 +1,6 @@
+.gradle/
+you-are-sdk.iml
+you-are-sdk.ipr
+you-are-sdk.iws
+build/
+out/
