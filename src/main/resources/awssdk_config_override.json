@@ -15,5 +15,10 @@
         "config" : {
             "serviceName" : "euserv"
         }
+    }, {
+        "key" : "YouTagClient",
+        "config" : {
+            "serviceName" : "tag"
+        }
     } ]
 }
