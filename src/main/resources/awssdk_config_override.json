@@ -1,6 +1,11 @@
 {
     // AWS http client internal configuration.
     "httpClients" : [ {
+        "key" : "YouBillClient",
+        "config" : {
+            "serviceName" : "aws-portal"
+        }
+    }, {
         "key" : "YouConfigClient",
         "config" : {
             "serviceName" : "euconfig"
