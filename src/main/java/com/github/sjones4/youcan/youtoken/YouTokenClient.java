@@ -40,6 +40,7 @@ import com.amazonaws.transform.StaxUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
 import com.amazonaws.util.BinaryUtils;
+import com.amazonaws.util.CredentialUtils;
 import com.github.sjones4.youcan.youtoken.model.GetAccessTokenRequest;
 import com.github.sjones4.youcan.youtoken.model.GetAccessTokenResult;
 import com.github.sjones4.youcan.youtoken.model.GetImpersonationTokenRequest;
@@ -128,7 +129,7 @@ public class YouTokenClient extends AWSSecurityTokenServiceClient implements You
     return new ExecutionContext(requestHandler2s, isMetricsEnabled, this) {
       @Override
       public Signer getSignerByURI( final URI uri ) {
-        if ( getCredentials( ) instanceof PasswordCredentials ) {
+        if ( getCredentialsProvider( ).getCredentials( ) instanceof PasswordCredentials ) {
           return new PasswordSigner();
         }
         return super.getSignerByURI( uri );
@@ -143,14 +144,8 @@ public class YouTokenClient extends AWSSecurityTokenServiceClient implements You
   {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
-    AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
 
-    AWSCredentials credentials = awsCredentialsProvider.getCredentials();
-    if (originalRequest.getRequestCredentials() != null) {
-      credentials = originalRequest.getRequestCredentials();
-    }
-
-    executionContext.setCredentials(credentials);
+    executionContext.setCredentialsProvider( CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);

@@ -31,6 +31,7 @@ import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient;
 import com.amazonaws.transform.StaxUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
+import com.amazonaws.util.CredentialUtils;
 import com.github.sjones4.youcan.youare.model.CreateAccountRequest;
 import com.github.sjones4.youcan.youare.model.CreateAccountResult;
 import com.github.sjones4.youcan.youare.model.DeleteAccountPolicyRequest;
@@ -219,14 +220,8 @@ public class YouAreClient extends AmazonIdentityManagementClient implements YouA
   {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
-    AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
 
-    AWSCredentials credentials = awsCredentialsProvider.getCredentials();
-    if (originalRequest.getRequestCredentials() != null) {
-      credentials = originalRequest.getRequestCredentials();
-    }
-
-    executionContext.setCredentials(credentials);
+    executionContext.setCredentialsProvider( CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);

@@ -30,6 +30,7 @@ import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.transform.StaxUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
+import com.amazonaws.util.CredentialUtils;
 import com.github.sjones4.youcan.youtwo.model.DescribeInstanceTypesRequest;
 import com.github.sjones4.youcan.youtwo.model.DescribeInstanceTypesResult;
 import com.github.sjones4.youcan.youtwo.model.transform.DescribeInstanceTypesRequestMarshaller;
@@ -96,14 +97,8 @@ public class YouTwoClient extends AmazonEC2Client implements YouTwo {
   {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
-    AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
 
-    AWSCredentials credentials = awsCredentialsProvider.getCredentials();
-    if (originalRequest.getRequestCredentials() != null) {
-      credentials = originalRequest.getRequestCredentials();
-    }
-
-    executionContext.setCredentials(credentials);
+    executionContext.setCredentialsProvider( CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);

@@ -35,6 +35,7 @@ import com.amazonaws.transform.LegacyErrorUnmarshaller;
 import com.amazonaws.transform.StaxUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
+import com.amazonaws.util.CredentialUtils;
 import com.github.sjones4.youcan.youprop.model.DescribePropertiesRequest;
 import com.github.sjones4.youcan.youprop.model.DescribePropertiesResult;
 import com.github.sjones4.youcan.youprop.model.ModifyPropertyValueRequest;
@@ -91,14 +92,8 @@ public class YouPropClient extends AmazonWebServiceClient implements YouProp {
   {
     request.setEndpoint(endpoint);
     request.setTimeOffset(timeOffset);
-    AmazonWebServiceRequest originalRequest = request.getOriginalRequest();
 
-    AWSCredentials credentials = awsCredentialsProvider.getCredentials();
-    if (originalRequest.getRequestCredentials() != null) {
-      credentials = originalRequest.getRequestCredentials();
-    }
-
-    executionContext.setCredentials(credentials);
+    executionContext.setCredentialsProvider( CredentialUtils.getCredentialsProvider(request.getOriginalRequest(), awsCredentialsProvider));
 
     StaxResponseHandler<X> responseHandler = new StaxResponseHandler<X>(unmarshaller);
     DefaultErrorResponseHandler errorResponseHandler = new DefaultErrorResponseHandler(exceptionUnmarshallers);
