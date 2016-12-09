@@ -25,5 +25,10 @@
         "config" : {
             "serviceName" : "tag"
         }
+    }, {
+        "key" : "YouEc2ReportsClient",
+        "config" : {
+            "serviceName" : "ec2reports"
+        }
     } ]
 }
