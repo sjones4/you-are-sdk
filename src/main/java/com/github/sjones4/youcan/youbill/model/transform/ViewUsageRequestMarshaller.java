@@ -27,8 +27,8 @@ public class ViewUsageRequestMarshaller implements Marshaller<Request<ViewUsageR
       request.addParameter("UsageTypes", StringUtils.fromString(viewUsageRequest.getUsageTypes()));
     }
 
-    if ( viewUsageRequest.getOperation()  != null) {
-      request.addParameter("Operation", StringUtils.fromString(viewUsageRequest.getOperation()));
+    if ( viewUsageRequest.getOperations()  != null) {
+      request.addParameter("Operations", StringUtils.fromString(viewUsageRequest.getOperations()));
     }
 
     if ( viewUsageRequest.getTimePeriodFrom() != null) {

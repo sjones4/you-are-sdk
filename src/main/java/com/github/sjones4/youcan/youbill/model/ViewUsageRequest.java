@@ -11,7 +11,7 @@ public class ViewUsageRequest  extends AmazonWebServiceRequest implements Serial
   private static final long serialVersionUID = 1L;
   private String services;
   private String usageTypes;
-  private String operation;
+  private String operations;
   private Date timePeriodFrom;
   private Date timePeriodTo;
   private String reportGranularity;
@@ -28,11 +28,9 @@ public class ViewUsageRequest  extends AmazonWebServiceRequest implements Serial
   public void setUsageTypes(final String usageTypes) {
     this.usageTypes = usageTypes;
   }
-  public String getOperation() {
-    return operation;
-  }
-  public void setOperation(final String operation) {
-    this.operation = operation;
+  public String getOperations() { return operations; }
+  public void setOperations(final String operations) {
+    this.operations = operations;
   }
   public Date getTimePeriodFrom() {
     return timePeriodFrom;
@@ -59,7 +57,7 @@ public class ViewUsageRequest  extends AmazonWebServiceRequest implements Serial
     sb.append("{");
     if ( getServices() != null) sb.append("Services: " + getServices() + ",");
     if ( getUsageTypes() != null) sb.append("UsageTypes: " + getUsageTypes() + ",");
-    if ( getOperation() != null) sb.append("Operation: " + getOperation() + ",");
+    if ( getOperations() != null) sb.append("Operations: " + getOperations() + ",");
     if ( getTimePeriodFrom() != null) sb.append("TimePeriodFrom: " + getTimePeriodFrom() + ",");
     if ( getTimePeriodTo() != null) sb.append("TimePeriodTo: " + getTimePeriodTo() + ",");
     if ( getReportGranularity() != null) sb.append("ReportGranularity: " + getReportGranularity() + ",");
@@ -74,7 +72,7 @@ public class ViewUsageRequest  extends AmazonWebServiceRequest implements Serial
 
     hashCode = prime * hashCode + (( getServices() == null) ? 0 : getServices().hashCode());
     hashCode = prime * hashCode + (( getUsageTypes() == null) ? 0 : getUsageTypes().hashCode());
-    hashCode = prime * hashCode + (( getOperation() == null) ? 0 : getOperation().hashCode());
+    hashCode = prime * hashCode + (( getOperations() == null) ? 0 : getOperations().hashCode());
     hashCode = prime * hashCode + (( getTimePeriodFrom() == null) ? 0 : getTimePeriodFrom().hashCode());
     hashCode = prime * hashCode + (( getTimePeriodTo() == null) ? 0 : getTimePeriodTo().hashCode());
     hashCode = prime * hashCode + (( getReportGranularity() == null) ? 0 : getReportGranularity().hashCode());
@@ -91,7 +89,7 @@ public class ViewUsageRequest  extends AmazonWebServiceRequest implements Serial
 
     if (other.getServices() == null ^ this.getServices() == null) return false;
     if (other.getUsageTypes() == null ^ this.getUsageTypes() == null) return false;
-    if (other.getOperation() == null ^ this.getOperation() == null) return false;
+    if (other.getOperations() == null ^ this.getOperations() == null) return false;
     if (other.getTimePeriodFrom() == null ^ this.getTimePeriodFrom() == null) return false;
     if (other.getTimePeriodTo() == null ^ this.getTimePeriodTo() == null) return false;
     if (other.getReportGranularity() == null ^ this.getReportGranularity() == null) return false;
