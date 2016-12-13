@@ -1,10 +1,10 @@
-package com.github.sjones4.youcan.youbill.model.transform;
+package com.github.sjones4.youcan.youec2reports.model.transform;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.DefaultRequest;
 import com.amazonaws.Request;
 import com.amazonaws.transform.Marshaller;
-import com.github.sjones4.youcan.youbill.model.ViewInstanceUsageReportRequest;
+import com.github.sjones4.youcan.youec2reports.model.ViewInstanceUsageReportRequest;
 
 /*
  *

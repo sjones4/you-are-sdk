@@ -1,4 +1,4 @@
-package com.github.sjones4.youcan.youbill.model;
+package com.github.sjones4.youcan.youec2reports.model;
 
 import com.amazonaws.AmazonWebServiceRequest;
 
@@ -7,9 +7,8 @@ import java.io.Serializable;
 /*
  *
  */
-public class ViewReservedInstanceUtilizationReportRequest extends AmazonWebServiceRequest implements Serializable {
+public class ViewInstanceUsageReportRequest  extends AmazonWebServiceRequest implements Serializable {
   private static final long serialVersionUID = 1L;
-
 
   @Override
   public String toString() {
@@ -33,8 +32,8 @@ public class ViewReservedInstanceUtilizationReportRequest extends AmazonWebServi
     if (this == obj) return true;
     if (obj == null) return false;
 
-    if (obj instanceof ViewReservedInstanceUtilizationReportRequest == false) return false;
-    final ViewReservedInstanceUtilizationReportRequest other = (ViewReservedInstanceUtilizationReportRequest)obj;
+    if (obj instanceof ViewInstanceUsageReportRequest == false) return false;
+    final ViewInstanceUsageReportRequest other = (ViewInstanceUsageReportRequest)obj;
 
     return true;
   }

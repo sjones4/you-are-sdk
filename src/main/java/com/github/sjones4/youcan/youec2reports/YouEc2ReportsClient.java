@@ -1,4 +1,4 @@
-package com.github.sjones4.youcan.youbill;
+package com.github.sjones4.youcan.youec2reports;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -22,14 +22,14 @@ import com.amazonaws.transform.JsonUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.amazonaws.util.AWSRequestMetrics;
 import com.amazonaws.util.CredentialUtils;
-import com.github.sjones4.youcan.youbill.model.ViewInstanceUsageReportRequest;
-import com.github.sjones4.youcan.youbill.model.ViewInstanceUsageReportResult;
-import com.github.sjones4.youcan.youbill.model.ViewReservedInstanceUtilizationReportRequest;
-import com.github.sjones4.youcan.youbill.model.ViewReservedInstanceUtilizationReportResult;
-import com.github.sjones4.youcan.youbill.model.transform.ViewInstanceUsageReportRequestMarshaller;
-import com.github.sjones4.youcan.youbill.model.transform.ViewInstanceUsageReportResultJsonUnmarshaller;
-import com.github.sjones4.youcan.youbill.model.transform.ViewReservedInstanceUtilizationReportRequestMarshaller;
-import com.github.sjones4.youcan.youbill.model.transform.ViewReservedInstanceUtilizationReportResultJsonUnmarshaller;
+import com.github.sjones4.youcan.youec2reports.model.ViewInstanceUsageReportRequest;
+import com.github.sjones4.youcan.youec2reports.model.ViewInstanceUsageReportResult;
+import com.github.sjones4.youcan.youec2reports.model.ViewReservedInstanceUtilizationReportRequest;
+import com.github.sjones4.youcan.youec2reports.model.ViewReservedInstanceUtilizationReportResult;
+import com.github.sjones4.youcan.youec2reports.model.transform.ViewInstanceUsageReportRequestMarshaller;
+import com.github.sjones4.youcan.youec2reports.model.transform.ViewInstanceUsageReportResultJsonUnmarshaller;
+import com.github.sjones4.youcan.youec2reports.model.transform.ViewReservedInstanceUtilizationReportRequestMarshaller;
+import com.github.sjones4.youcan.youec2reports.model.transform.ViewReservedInstanceUtilizationReportResultJsonUnmarshaller;
 
 /*
  *

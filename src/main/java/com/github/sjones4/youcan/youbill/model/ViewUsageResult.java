@@ -43,7 +43,10 @@ public class ViewUsageResult implements Serializable {
     if ( obj instanceof ViewUsageResult == false ) return false;
     final ViewUsageResult other = (ViewUsageResult) obj;
 
-    if (other.getData() == null ^ this.getData() == null) return false;
+    if (this.data == null && other.data != null)
+      return false;
+    else if (this.data != null && !this.data.equals(other.data))
+      return false;
 
     return true;
   }

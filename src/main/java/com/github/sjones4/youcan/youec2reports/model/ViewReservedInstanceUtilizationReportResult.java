@@ -1,4 +1,4 @@
-package com.github.sjones4.youcan.youbill.model;
+package com.github.sjones4.youcan.youec2reports.model;
 
 import java.io.Serializable;
 
@@ -45,7 +45,10 @@ public class ViewReservedInstanceUtilizationReportResult  implements Serializabl
     if ( obj instanceof ViewReservedInstanceUtilizationReportResult == false ) return false;
     final ViewReservedInstanceUtilizationReportResult other = (ViewReservedInstanceUtilizationReportResult) obj;
 
-    if (other.getUtilizationReport() == null ^ this.getUtilizationReport() == null) return false;
+    if (this.utilizationReport == null && other.utilizationReport != null)
+      return false;
+    else if (this.utilizationReport != null && !this.utilizationReport.equals(other.utilizationReport))
+      return false;
 
     return true;
   }

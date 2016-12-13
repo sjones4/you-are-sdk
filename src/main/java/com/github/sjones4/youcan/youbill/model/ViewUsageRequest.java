@@ -87,12 +87,35 @@ public class ViewUsageRequest  extends AmazonWebServiceRequest implements Serial
     if (obj instanceof ViewUsageRequest == false) return false;
     ViewUsageRequest other = (ViewUsageRequest)obj;
 
-    if (other.getServices() == null ^ this.getServices() == null) return false;
-    if (other.getUsageTypes() == null ^ this.getUsageTypes() == null) return false;
-    if (other.getOperations() == null ^ this.getOperations() == null) return false;
-    if (other.getTimePeriodFrom() == null ^ this.getTimePeriodFrom() == null) return false;
-    if (other.getTimePeriodTo() == null ^ this.getTimePeriodTo() == null) return false;
-    if (other.getReportGranularity() == null ^ this.getReportGranularity() == null) return false;
+    if (this.services == null && other.services != null)
+      return false;
+    else if (this.services!=null && !this.services.equals(other.services))
+      return false;
+
+    if (this.usageTypes == null && other.usageTypes != null)
+      return false;
+    else if (this.usageTypes != null && !this.usageTypes.equals(other.usageTypes))
+      return false;
+
+    if (this.operations == null && other.operations != null)
+      return false;
+    else if (this.operations != null && !this.operations.equals(other.operations))
+      return false;
+
+    if (this.timePeriodFrom == null && other.timePeriodFrom != null)
+      return false;
+    else if (this.timePeriodFrom  != null && !this.timePeriodFrom.equals(other.timePeriodFrom))
+      return false;
+
+    if (this.timePeriodTo == null && other.timePeriodTo != null)
+      return false;
+    else if (this.timePeriodTo != null && !this.timePeriodTo.equals(other.timePeriodTo))
+      return false;
+
+    if (this.reportGranularity == null && other.reportGranularity != null)
+      return false;
+    else if (this.reportGranularity != null && !this.reportGranularity.equals(other.reportGranularity))
+      return false;
 
     return true;
   }

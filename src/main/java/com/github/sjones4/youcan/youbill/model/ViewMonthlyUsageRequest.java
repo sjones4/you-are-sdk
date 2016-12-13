@@ -47,8 +47,16 @@ public class ViewMonthlyUsageRequest  extends AmazonWebServiceRequest implements
     if (obj instanceof ViewMonthlyUsageRequest == false) return false;
     final ViewMonthlyUsageRequest other = (ViewMonthlyUsageRequest)obj;
 
-    if (other.getYear() == null ^ this.getYear() == null) return false;
-    if (other.getMonth() == null ^ this.getMonth() == null) return false;
+    if (this.year == null && other.year != null)
+      return false;
+    else if (this.year != null && !this.year.equals(other.year))
+      return false;
+
+    if (this.month == null && other.month != null)
+      return false;
+    else if (this.month != null && !this.month.equals(other.month))
+      return false;
+
     return true;
   }
 }

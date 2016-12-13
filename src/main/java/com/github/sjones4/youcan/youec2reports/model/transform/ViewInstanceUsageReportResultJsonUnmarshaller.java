@@ -1,17 +1,17 @@
-package com.github.sjones4.youcan.youbill.model.transform;
+package com.github.sjones4.youcan.youec2reports.model.transform;
 
 import com.amazonaws.transform.JsonUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.fasterxml.jackson.core.JsonToken;
-import com.github.sjones4.youcan.youbill.model.ViewReservedInstanceUtilizationReportResult;
+import com.github.sjones4.youcan.youec2reports.model.ViewInstanceUsageReportResult;
 
 /*
  *
  */
-public class ViewReservedInstanceUtilizationReportResultJsonUnmarshaller implements Unmarshaller<ViewReservedInstanceUtilizationReportResult, JsonUnmarshallerContext> {
+public class ViewInstanceUsageReportResultJsonUnmarshaller implements Unmarshaller<ViewInstanceUsageReportResult, JsonUnmarshallerContext> {
   @Override
-  public ViewReservedInstanceUtilizationReportResult unmarshall(JsonUnmarshallerContext context) throws Exception {
-    final ViewReservedInstanceUtilizationReportResult viewReservedInstanceUtilizationReportResult = new ViewReservedInstanceUtilizationReportResult();
+  public ViewInstanceUsageReportResult unmarshall(JsonUnmarshallerContext context) throws Exception {
+    final ViewInstanceUsageReportResult viewInstanceUsageReportResult = new ViewInstanceUsageReportResult();
     int originalDepth = context.getCurrentDepth();
     String currentParentElement = context.getCurrentParentElement();
     int targetDepth = originalDepth + 1;
@@ -29,9 +29,9 @@ public class ViewReservedInstanceUtilizationReportResultJsonUnmarshaller impleme
           break;
 
         if (token == JsonToken.FIELD_NAME || token == JsonToken.START_OBJECT) {
-          if (context.testExpression("utilizationReport", targetDepth)) {
+          if (context.testExpression("usageReport", targetDepth)) {
             context.nextToken();
-            viewReservedInstanceUtilizationReportResult.setUtilizationReport(context.getUnmarshaller(String.class).unmarshall(context));
+            viewInstanceUsageReportResult.setUsageReport(context.getUnmarshaller(String.class).unmarshall(context));
           }
         } else if (token == JsonToken.END_ARRAY || token == JsonToken.END_OBJECT) {
           if (context.getLastParsedParentElement() == null || context.getLastParsedParentElement().equals(currentParentElement)) {
@@ -42,7 +42,7 @@ public class ViewReservedInstanceUtilizationReportResultJsonUnmarshaller impleme
         token = context.nextToken();
       }
 
-      return viewReservedInstanceUtilizationReportResult;
+      return viewInstanceUsageReportResult;
     }
   }
 }

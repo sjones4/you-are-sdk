@@ -40,10 +40,13 @@ public class ViewMonthlyUsageResult implements Serializable {
     if ( this == obj ) return true;
     if ( obj == null ) return false;
 
-    if ( obj instanceof ViewUsageResult == false ) return false;
-    final ViewUsageResult other = (ViewUsageResult) obj;
+    if ( obj instanceof ViewMonthlyUsageResult == false ) return false;
+    final ViewMonthlyUsageResult other = (ViewMonthlyUsageResult) obj;
 
-    if (other.getData() == null ^ this.getData() == null) return false;
+    if (this.data == null && other.data != null)
+      return false;
+    else if (this.data != null && !this.data.equals(other.data))
+      return false;
 
     return true;
   }

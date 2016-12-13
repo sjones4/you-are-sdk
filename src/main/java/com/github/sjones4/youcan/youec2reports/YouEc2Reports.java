@@ -1,10 +1,10 @@
-package com.github.sjones4.youcan.youbill;
+package com.github.sjones4.youcan.youec2reports;
 
 import com.amazonaws.AmazonClientException;
-import com.github.sjones4.youcan.youbill.model.ViewInstanceUsageReportRequest;
-import com.github.sjones4.youcan.youbill.model.ViewInstanceUsageReportResult;
-import com.github.sjones4.youcan.youbill.model.ViewReservedInstanceUtilizationReportRequest;
-import com.github.sjones4.youcan.youbill.model.ViewReservedInstanceUtilizationReportResult;
+import com.github.sjones4.youcan.youec2reports.model.ViewInstanceUsageReportRequest;
+import com.github.sjones4.youcan.youec2reports.model.ViewInstanceUsageReportResult;
+import com.github.sjones4.youcan.youec2reports.model.ViewReservedInstanceUtilizationReportRequest;
+import com.github.sjones4.youcan.youec2reports.model.ViewReservedInstanceUtilizationReportResult;
 
 /*
  *
