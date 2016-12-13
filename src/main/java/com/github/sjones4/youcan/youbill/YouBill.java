@@ -23,6 +23,10 @@ import com.github.sjones4.youcan.youbill.model.ViewAccountRequest;
 import com.github.sjones4.youcan.youbill.model.ViewAccountResult;
 import com.github.sjones4.youcan.youbill.model.ViewBillingRequest;
 import com.github.sjones4.youcan.youbill.model.ViewBillingResult;
+import com.github.sjones4.youcan.youbill.model.ViewMonthlyUsageRequest;
+import com.github.sjones4.youcan.youbill.model.ViewMonthlyUsageResult;
+import com.github.sjones4.youcan.youbill.model.ViewUsageRequest;
+import com.github.sjones4.youcan.youbill.model.ViewUsageResult;
 
 /**
  * AWS Billing Console / AWS Portal service
@@ -37,4 +41,7 @@ public interface YouBill {
 
   ModifyBillingResult modifyBilling( final ModifyBillingRequest modifyBillingRequest ) throws AmazonClientException;
 
+  ViewUsageResult viewUsage(final ViewUsageRequest viewUsageRequest ) throws AmazonClientException;
+
+  ViewMonthlyUsageResult viewMonthlyUsage(final ViewMonthlyUsageRequest viewMonthlyUsageRequest ) throws AmazonClientException;
 }

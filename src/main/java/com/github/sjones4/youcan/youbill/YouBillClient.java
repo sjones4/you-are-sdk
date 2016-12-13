@@ -44,6 +44,10 @@ import com.github.sjones4.youcan.youbill.model.ViewAccountRequest;
 import com.github.sjones4.youcan.youbill.model.ViewAccountResult;
 import com.github.sjones4.youcan.youbill.model.ViewBillingRequest;
 import com.github.sjones4.youcan.youbill.model.ViewBillingResult;
+import com.github.sjones4.youcan.youbill.model.ViewMonthlyUsageRequest;
+import com.github.sjones4.youcan.youbill.model.ViewMonthlyUsageResult;
+import com.github.sjones4.youcan.youbill.model.ViewUsageRequest;
+import com.github.sjones4.youcan.youbill.model.ViewUsageResult;
 import com.github.sjones4.youcan.youbill.model.transform.ModifyAccountRequestMarshaller;
 import com.github.sjones4.youcan.youbill.model.transform.ModifyAccountResultJsonUnmarshaller;
 import com.github.sjones4.youcan.youbill.model.transform.ModifyBillingRequestMarshaller;
@@ -52,6 +56,10 @@ import com.github.sjones4.youcan.youbill.model.transform.ViewAccountRequestMarsh
 import com.github.sjones4.youcan.youbill.model.transform.ViewAccountResultJsonUnmarshaller;
 import com.github.sjones4.youcan.youbill.model.transform.ViewBillingRequestMarshaller;
 import com.github.sjones4.youcan.youbill.model.transform.ViewBillingResultJsonUnmarshaller;
+import com.github.sjones4.youcan.youbill.model.transform.ViewMonthlyUsageRequestMarshaller;
+import com.github.sjones4.youcan.youbill.model.transform.ViewMonthlyUsageResultJsonUnmarshaller;
+import com.github.sjones4.youcan.youbill.model.transform.ViewUsageRequestMarshaller;
+import com.github.sjones4.youcan.youbill.model.transform.ViewUsageResultJsonUnmarshaller;
 
 /**
  *
@@ -179,6 +187,40 @@ public class YouBillClient extends AmazonWebServiceClient implements YouBill {
       // Binds the request metrics to the current request.
       request.setAWSRequestMetrics(awsRequestMetrics);
       response = invoke(request, new ModifyBillingResultJsonUnmarshaller(), executionContext);
+      return response.getAwsResponse();
+    } finally {
+      endClientExecution(awsRequestMetrics, request, response);
+    }
+  }
+
+  @Override
+  public ViewUsageResult viewUsage(final ViewUsageRequest viewUsageRequest ) throws AmazonClientException {
+    final ExecutionContext executionContext = createExecutionContext(viewUsageRequest);
+    final AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<ViewUsageRequest> request = null;
+    Response<ViewUsageResult> response = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
+    try {
+      request = new ViewUsageRequestMarshaller().marshall(viewUsageRequest);
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      response = invoke(request, new ViewUsageResultJsonUnmarshaller(), executionContext);
+      return response.getAwsResponse();
+    } finally {
+      endClientExecution(awsRequestMetrics, request, response);
+    }
+  }
+
+  @Override
+  public ViewMonthlyUsageResult viewMonthlyUsage(ViewMonthlyUsageRequest viewMonthlyUsageRequest) throws AmazonClientException {
+    final ExecutionContext executionContext = createExecutionContext(viewMonthlyUsageRequest);
+    final AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<ViewMonthlyUsageRequest> request = null;
+    Response<ViewMonthlyUsageResult> response = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime );
+    try {
+      request = new ViewMonthlyUsageRequestMarshaller().marshall(viewMonthlyUsageRequest);
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      response = invoke(request, new ViewMonthlyUsageResultJsonUnmarshaller(), executionContext);
       return response.getAwsResponse();
     } finally {
       endClientExecution(awsRequestMetrics, request, response);
