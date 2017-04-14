@@ -9,7 +9,9 @@ To build run:
 The following clients are included:
 
 * YouAreClient - IAM extension with account management support
+* YouBillClient - Eucalyptus client for programmatic billing
 * YouConfigClient - Eucalyptus administrative client supporting component listing
+* YouEc2ReportsClient - Eucalyptus client for EC2 usage reporting
 * YouPropClient - Eucalyptus administrative client with property management support
 * YouServClient - Eucalyptus administrative client with service describe support
 * YouTokenClient - IAM/STS extension with impersonation and password token support
