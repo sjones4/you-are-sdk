@@ -20,10 +20,5 @@
         "config" : {
             "serviceName" : "euserv"
         }
-    }, {
-        "key" : "YouEc2ReportsClient",
-        "config" : {
-            "serviceName" : "ec2reports"
-        }
     } ]
 }
