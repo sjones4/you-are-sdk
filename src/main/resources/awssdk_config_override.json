@@ -1,11 +1,6 @@
 {
     // AWS http client internal configuration.
     "httpClients" : [ {
-        "key" : "YouConfigClient",
-        "config" : {
-            "serviceName" : "euconfig"
-        }
-    }, {
         "key" : "YouPropClient",
         "config" : {
             "serviceName" : "euprop"
