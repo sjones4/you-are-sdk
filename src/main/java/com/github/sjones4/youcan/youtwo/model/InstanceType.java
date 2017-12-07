@@ -28,7 +28,7 @@ public class InstanceType implements Serializable {
 
   private String name;
   private Integer cpu;
-  Integer disk;
+  private Integer disk;
   private Integer memory;
   private ListWithAutoConstructFlag<InstanceTypeZoneStatus> availability;
   private ListWithAutoConstructFlag<InstanceTypeEphemeralDisk> ephemeralDisk;

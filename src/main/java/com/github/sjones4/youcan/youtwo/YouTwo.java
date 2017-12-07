@@ -19,6 +19,8 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.github.sjones4.youcan.youtwo.model.DescribeInstanceTypesRequest;
 import com.github.sjones4.youcan.youtwo.model.DescribeInstanceTypesResult;
+import com.github.sjones4.youcan.youtwo.model.ModifyInstanceTypeAttributeRequest;
+import com.github.sjones4.youcan.youtwo.model.ModifyInstanceTypeAttributeResult;
 
 /**
  *
@@ -28,4 +30,6 @@ public interface YouTwo extends AmazonEC2 {
   DescribeInstanceTypesResult describeInstanceTypes( DescribeInstanceTypesRequest describeInstanceTypesRequest ) throws AmazonServiceException, AmazonClientException;
 
   DescribeInstanceTypesResult describeInstanceTypes( ) throws AmazonServiceException, AmazonClientException;
+
+  ModifyInstanceTypeAttributeResult modifyInstanceTypeAttribute( ModifyInstanceTypeAttributeRequest modifyInstanceTypeAttributeRequest ) throws AmazonServiceException, AmazonClientException;
 }

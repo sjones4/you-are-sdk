@@ -15,6 +15,7 @@
 package com.github.sjones4.youcan.youtwo;
 
 import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Request;
@@ -33,8 +34,12 @@ import com.amazonaws.util.AWSRequestMetrics;
 import com.amazonaws.util.CredentialUtils;
 import com.github.sjones4.youcan.youtwo.model.DescribeInstanceTypesRequest;
 import com.github.sjones4.youcan.youtwo.model.DescribeInstanceTypesResult;
+import com.github.sjones4.youcan.youtwo.model.ModifyInstanceTypeAttributeRequest;
+import com.github.sjones4.youcan.youtwo.model.ModifyInstanceTypeAttributeResult;
 import com.github.sjones4.youcan.youtwo.model.transform.DescribeInstanceTypesRequestMarshaller;
 import com.github.sjones4.youcan.youtwo.model.transform.DescribeInstanceTypesResultStaxUnmarshaller;
+import com.github.sjones4.youcan.youtwo.model.transform.ModifyInstanceTypeAttributeRequestMarshaller;
+import com.github.sjones4.youcan.youtwo.model.transform.ModifyInstanceTypeAttributeResultStaxUnmarshaller;
 
 /**
  *
@@ -88,6 +93,26 @@ public class YouTwoClient extends AmazonEC2Client implements YouTwo {
 
   public DescribeInstanceTypesResult describeInstanceTypes() throws AmazonClientException {
     return describeInstanceTypes( new DescribeInstanceTypesRequest( ) );
+  }
+
+  @Override
+  public ModifyInstanceTypeAttributeResult modifyInstanceTypeAttribute(
+      final ModifyInstanceTypeAttributeRequest modifyInstanceTypeAttributeRequest
+  ) throws AmazonServiceException, AmazonClientException {
+    ExecutionContext executionContext = createExecutionContext(modifyInstanceTypeAttributeRequest);
+    AWSRequestMetrics awsRequestMetrics = executionContext.getAwsRequestMetrics();
+    Request<ModifyInstanceTypeAttributeRequest> request = null;
+    Response<ModifyInstanceTypeAttributeResult> response = null;
+    awsRequestMetrics.startEvent( AWSRequestMetrics.Field.ClientExecuteTime);
+    try {
+      request = new ModifyInstanceTypeAttributeRequestMarshaller().marshall(modifyInstanceTypeAttributeRequest);
+      // Binds the request metrics to the current request.
+      request.setAWSRequestMetrics(awsRequestMetrics);
+      response = invoke(request, new ModifyInstanceTypeAttributeResultStaxUnmarshaller( ), executionContext);
+      return response.getAwsResponse();
+    } finally {
+      endClientExecution(awsRequestMetrics, request, response);
+    }
   }
 
   private <X, Y extends AmazonWebServiceRequest> Response<X> invoke(

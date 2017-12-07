@@ -1,16 +1,6 @@
 {
     // AWS http client internal configuration.
     "httpClients" : [ {
-        "key" : "YouBillClient",
-        "config" : {
-            "serviceName" : "aws-portal"
-        }
-    }, {
-        "key" : "YouConfigClient",
-        "config" : {
-            "serviceName" : "euconfig"
-        }
-    }, {
         "key" : "YouPropClient",
         "config" : {
             "serviceName" : "euprop"
@@ -19,11 +9,6 @@
         "key" : "YouServClient",
         "config" : {
             "serviceName" : "euserv"
-        }
-    }, {
-        "key" : "YouEc2ReportsClient",
-        "config" : {
-            "serviceName" : "ec2reports"
         }
     } ]
 }
