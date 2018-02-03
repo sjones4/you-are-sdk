@@ -18,15 +18,15 @@ import javax.xml.stream.events.XMLEvent;
 import com.amazonaws.transform.SimpleTypeStaxUnmarshallers;
 import com.amazonaws.transform.StaxUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
-import com.github.sjones4.youcan.youserv.model.ServiceStatus;
+import com.github.sjones4.youcan.youserv.model.ServiceAccount;
 
 /**
  *
  */
-public class ServiceStatusStaxUnmarshaller implements Unmarshaller<ServiceStatus, StaxUnmarshallerContext> {
+public class ServiceAccountStaxUnmarshaller implements Unmarshaller<ServiceAccount, StaxUnmarshallerContext> {
 
-  public ServiceStatus unmarshall( final StaxUnmarshallerContext context ) throws Exception {
-    ServiceStatus serviceStatus = new ServiceStatus();
+  public ServiceAccount unmarshall( final StaxUnmarshallerContext context ) throws Exception {
+    ServiceAccount serviceAccount = new ServiceAccount();
     int originalDepth = context.getCurrentDepth();
     int targetDepth = originalDepth + 1;
 
@@ -34,35 +34,31 @@ public class ServiceStatusStaxUnmarshaller implements Unmarshaller<ServiceStatus
 
     while (true) {
       XMLEvent xmlEvent = context.nextEvent();
-      if (xmlEvent.isEndDocument()) return serviceStatus;
+      if (xmlEvent.isEndDocument()) return serviceAccount;
 
       if (xmlEvent.isAttribute() || xmlEvent.isStartElement()) {
-        if (context.testExpression("serviceId", targetDepth)) {
-          serviceStatus.setServiceId( ServiceIdStaxUnmarshaller.getInstance().unmarshall( context ) );
+        if (context.testExpression("accountName", targetDepth)) {
+          serviceAccount.setName( SimpleTypeStaxUnmarshallers.StringStaxUnmarshaller.getInstance().unmarshall( context ) );
           continue;
         }
-        if (context.testExpression("localState", targetDepth)) {
-          serviceStatus.setLocalState( SimpleTypeStaxUnmarshallers.StringStaxUnmarshaller.getInstance().unmarshall( context ) );
+        if (context.testExpression("accountNumber", targetDepth)) {
+          serviceAccount.setNumber( SimpleTypeStaxUnmarshallers.StringStaxUnmarshaller.getInstance().unmarshall( context ) );
           continue;
         }
-        if (context.testExpression("localEpoch", targetDepth)) {
-          serviceStatus.setLocalEpoch( SimpleTypeStaxUnmarshallers.IntegerStaxUnmarshaller.getInstance().unmarshall( context ) );
-          continue;
-        }
-        if (context.testExpression("serviceAccounts/item", targetDepth)) {
-          serviceStatus.getServiceAccounts().add(ServiceAccountStaxUnmarshaller.getInstance().unmarshall(context));
+        if (context.testExpression("accountCanonicalId", targetDepth)) {
+          serviceAccount.setCanonicalId( SimpleTypeStaxUnmarshallers.StringStaxUnmarshaller.getInstance().unmarshall( context ) );
           continue;
         }
       } else if (xmlEvent.isEndElement()) {
         if (context.getCurrentDepth() < originalDepth) {
-          return serviceStatus;
+          return serviceAccount;
         }
       }
     }
   }
 
-  private static ServiceStatusStaxUnmarshaller instance = new ServiceStatusStaxUnmarshaller( );
-  public static ServiceStatusStaxUnmarshaller getInstance() {
+  private static ServiceAccountStaxUnmarshaller instance = new ServiceAccountStaxUnmarshaller( );
+  public static ServiceAccountStaxUnmarshaller getInstance() {
     return instance;
   }
 }
