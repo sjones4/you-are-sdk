@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Steve Jones. All Rights Reserved.
+ * Copyright 2018 Steve Jones. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
 package com.github.sjones4.youcan.youserv.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import com.amazonaws.internal.ListWithAutoConstructFlag;
 
 /**
  *
@@ -25,6 +28,7 @@ public class ServiceStatus implements Serializable {
   private ServiceId serviceId;
   private String localState;
   private Integer localEpoch;
+  private ListWithAutoConstructFlag<ServiceAccount> serviceAccounts;
 
   public ServiceId getServiceId() {
     return serviceId;
@@ -50,13 +54,32 @@ public class ServiceStatus implements Serializable {
     this.localEpoch = localEpoch;
   }
 
+  public List<ServiceAccount> getServiceAccounts() {
+    if (serviceAccounts == null) {
+      serviceAccounts = new ListWithAutoConstructFlag<>();
+      serviceAccounts.setAutoConstruct(true);
+    }
+    return serviceAccounts;
+  }
+
+  public void setServiceAccounts( Collection<ServiceAccount> serviceAccounts ) {
+    if (serviceAccounts == null) {
+      this.serviceAccounts = null;
+      return;
+    }
+    ListWithAutoConstructFlag<ServiceAccount> serviceAccountsCopy = new ListWithAutoConstructFlag<>(serviceAccounts.size());
+    serviceAccountsCopy.addAll(serviceAccounts);
+    this.serviceAccounts = serviceAccountsCopy;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{");
     if (getServiceId() != null) sb.append("ServiceId: " + getServiceId() + ",");
     if (getLocalState() != null) sb.append("LocalState: " + getLocalState() + ",");
-    if (getLocalEpoch() != null) sb.append("LocalEpoch: " + getLocalEpoch() );
+    if (getLocalEpoch() != null) sb.append("LocalEpoch: " + getLocalEpoch() + ",");
+    if (getServiceAccounts() != null) sb.append("ServiceAccounts: " + getServiceAccounts() );
     sb.append("}");
     return sb.toString();
   }
@@ -69,6 +92,7 @@ public class ServiceStatus implements Serializable {
     hashCode = prime * hashCode + ((getServiceId() == null) ? 0 : getServiceId().hashCode());
     hashCode = prime * hashCode + ((getLocalState() == null) ? 0 : getLocalState().hashCode());
     hashCode = prime * hashCode + ((getLocalEpoch() == null) ? 0 : getLocalEpoch().hashCode());
+    hashCode = prime * hashCode + ((getServiceAccounts() == null) ? 0 : getServiceAccounts().hashCode());
     return hashCode;
   }
 
@@ -86,6 +110,8 @@ public class ServiceStatus implements Serializable {
     if (other.getLocalState() != null && other.getLocalState().equals(this.getLocalState()) == false) return false;
     if (other.getLocalEpoch() == null ^ this.getLocalEpoch() == null) return false;
     if (other.getLocalEpoch() != null && other.getLocalEpoch().equals(this.getLocalEpoch()) == false) return false;
+    if (other.getServiceAccounts() == null ^ this.getServiceAccounts() == null) return false;
+    if (other.getServiceAccounts() != null && other.getServiceAccounts().equals(this.getServiceAccounts()) == false) return false;
     return true;
   }
 }
