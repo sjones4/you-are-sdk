@@ -38,6 +38,10 @@ public class DescribeServicesRequestMarshaller implements Marshaller<Request<Des
     request.addParameter("Action", "DescribeServices");
     request.addParameter("Version", "eucalyptus");
 
+    if ( describeServicesRequest.getListAll( ) != null ) {
+      request.addParameter( "ListAll", StringUtils.fromBoolean( describeServicesRequest.getListAll( ) ) );
+    }
+
     final List<String> servicesList = describeServicesRequest.getServiceNames( );
     int servicesListIndex = 1;
 
