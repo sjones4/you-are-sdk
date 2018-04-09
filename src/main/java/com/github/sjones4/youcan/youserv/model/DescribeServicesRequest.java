@@ -27,8 +27,22 @@ import com.amazonaws.internal.ListWithAutoConstructFlag;
 public class DescribeServicesRequest extends AmazonWebServiceRequest implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  private Boolean listAll;
   private ListWithAutoConstructFlag<String> serviceNames;
   private ListWithAutoConstructFlag<Filter> filters;
+
+  public Boolean getListAll( ) {
+    return listAll;
+  }
+
+  public void setListAll( final Boolean listAll ) {
+    this.listAll = listAll;
+  }
+
+  public DescribeServicesRequest withListAll( final Boolean listAll ) {
+    setListAll( listAll );
+    return this;
+  }
 
   public List<String> getServiceNames() {
     if ( serviceNames == null) {
@@ -99,6 +113,7 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("{");
+    if ( getListAll() != null) sb.append("ListAll: " + getListAll() + ",");
     if ( getServiceNames() != null) sb.append("ServiceNames: " + getServiceNames() + ",");
     if ( getFilters() != null) sb.append("Filters: " + getFilters() + ",");
     sb.append("}");
@@ -110,6 +125,7 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
     final int prime = 31;
     int hashCode = 1;
 
+    hashCode = prime * hashCode + (( getListAll() == null) ? 0 : getListAll().hashCode());
     hashCode = prime * hashCode + (( getServiceNames() == null) ? 0 : getServiceNames().hashCode());
     hashCode = prime * hashCode + (( getFilters( ) == null) ? 0 : getFilters( ).hashCode());
     return hashCode;
@@ -123,6 +139,8 @@ public class DescribeServicesRequest extends AmazonWebServiceRequest implements 
     if (obj instanceof DescribeServicesRequest == false) return false;
     DescribeServicesRequest other = (DescribeServicesRequest)obj;
 
+    if (other.getListAll() == null ^ this.getListAll() == null) return false;
+    if (other.getListAll() != null && other.getListAll().equals(this.getListAll()) == false) return false;
     if (other.getServiceNames() == null ^ this.getServiceNames() == null) return false;
     if (other.getServiceNames() != null && other.getServiceNames().equals(this.getServiceNames()) == false) return false;
     if (other.getFilters( ) == null ^ this.getFilters( ) == null) return false;
