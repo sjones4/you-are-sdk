@@ -8,9 +8,8 @@
 
 plugins {
     id 'java'
+    id 'java-library'
     id 'idea'
-    id 'com.jfrog.bintray' version '1.2'
-    id 'maven'
     id 'maven-publish'
 }
 
@@ -20,19 +19,19 @@ targetCompatibility = 1.7
 sourceCompatibility = 1.7
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    compile 'com.amazonaws:aws-java-sdk-core:1.11.+'
-    compile 'com.amazonaws:aws-java-sdk-ec2:1.11.+'
-    compile 'com.amazonaws:aws-java-sdk-iam:1.11.+'
-    compile 'com.amazonaws:aws-java-sdk-sts:1.11.+'
+    api 'com.amazonaws:aws-java-sdk-core:[1.11, 1.12)'
+    api 'com.amazonaws:aws-java-sdk-ec2:[1.11, 1.12)'
+    api 'com.amazonaws:aws-java-sdk-iam:[1.11, 1.12)'
+    api 'com.amazonaws:aws-java-sdk-sts:[1.11, 1.12)'
 }
 
 jar {
   manifest {
-    attributes("Implementation-Title": "you-are-sdk", "Implementation-Version": version)
+    attributes("Implementation-Title": "you-are-sdk", "Implementation-Version": project.version)
   }
 }
 
@@ -46,6 +45,10 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+
 artifacts {
     archives sourcesJar
     archives javadocJar
@@ -53,29 +56,24 @@ artifacts {
 
 publishing {
     publications {
-        Publication(MavenPublication) {
+        Sdk(MavenPublication) {
             from components.java
             groupId 'com.github.sjones4'
             artifactId 'you-are-sdk'
-            version version
+            version project.version
             artifact sourcesJar
             artifact javadocJar
         }
     }
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['Publication']
-    pkg {
-        repo = 'maven'
-        name = 'com.github.sjones4:you-are-sdk'
-        desc = 'Extension of AWS SDK for Java with Eucalyptus specific functionality'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/sjones4/you-are-sdk.git'
-        websiteUrl = 'https://github.com/sjones4/you-are-sdk'
-        issueTrackerUrl = 'https://github.com/sjones4/you-are-sdk/issues'
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sjones4/you-are-sdk")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USER")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
 
