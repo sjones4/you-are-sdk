@@ -17,5 +17,4 @@ The following clients are included:
 * YouTokenClient - IAM/STS extension with impersonation and password token support
 * YouTwoClient - EC2 extension with instance type describe support
 
-[![Build Status](https://drone.io/github.com/sjones4/you-are-sdk/status.png)](https://drone.io/github.com/sjones4/you-are-sdk/latest)
-[ ![Download](https://api.bintray.com/packages/sjones4/maven/com.github.sjones4%3Ayou-are-sdk/images/download.svg) ](https://bintray.com/sjones4/maven/com.github.sjones4%3Ayou-are-sdk/_latestVersion)
+[Azure Pipelines Artifacts](https://dev.azure.com/sjones4/eucalyptus/_packaging?_a=package&feed=maven&package=com.github.sjones4%3Ayou-are-sdk&protocolType=maven)
